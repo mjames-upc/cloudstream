@@ -1,7 +1,7 @@
 CloudStream
 ===========
 
-* [Travis-CI Dashboard](https://travis-ci.org/Unidata/cloudstream):  <IMG SRC="https://travis-ci.org/Unidata/cloudstream.svg?branch=master"/>
+* [Travis-CI Dashboard](https://travis-ci.org/Unidata/cloudstream):  <IMG SRC="https://travis-ci.org/Unidata/cloudstream.svg?branch=master"/>  <IMG SRC="https://img.shields.io/docker/pulls/unidata/cloudstream.svg"/>
 
 Table of contents
 -----------------
@@ -54,11 +54,10 @@ A new Docker application based on `unidata/cloudstream:latest` (Ubuntu) begins a
 
     FROM unidata/cloudstream:latest
     USER root
-    # Tell the Ubuntu package manager that we are running in a non-interactive mode.
+    # Run in non-interactive mode
     ENV DEBIAN_FRONTEND noninteractive
-    # Update the package manager information and update any installed packages.
-    RUN apt-get update && apt-get -y upgrade
     # Run any command here...
+    COPY start.sh ${HOME}/
 
 #### CentOS 7 Dockerfile
 
@@ -68,6 +67,8 @@ A new Docker application based on `unidata/cloudstream:centos7` begins as
     ENV APPLICATION_VERSION 1.0.0
     # Run any command here...
     COPY start.sh ${HOME}/
+    
+The file `start.sh` will be run by `bootstrap.sh` to execute your own application, and must be present in `${HOME}` (`/home/stream`).
 
 Once a custom Dockerfile has been configured, building your project is as simple as:
 
